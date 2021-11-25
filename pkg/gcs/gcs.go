@@ -46,9 +46,8 @@ func ListFoldersInRoot(ctx *context.Context) (error, []string) {
 	return nil, folders
 }
 
-func ListFiles(name, tag string) interface{} {
+func ListFiles(name string, clientTags []string) interface{} {
 	var wg sync.WaitGroup
-	tag = strings.ToLower(tag)
 
 	ctx := context.Background()
 
@@ -78,16 +77,15 @@ func ListFiles(name, tag string) interface{} {
 			metadata := attrs.Metadata
 			if len(metadata) != 0 {
 				tags := metadata["type"]
-				if tags != "all" && tags != "" {
+				for _, tag := range clientTags {
 					if strings.Contains(tags, tag) || strings.Contains(strings.ToLower(attrs.Prefix), strings.ToLower(name)) {
 						file := map[string]interface{}{}
 						file["publicUrl"] = getPublicUrl(attrs.Name)
 						file["name"] = attrs.Name
 						file["type"] = tags
 						result = append(result, file)
+						break
 					}
-				} else {
-
 				}
 			}
 		}

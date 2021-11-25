@@ -91,3 +91,11 @@ func main() {
 //		println("--------- ", res, " ------------")
 //	}
 //}
+//func main()  {
+//	tags := "dog, cat,  deer"
+//	list := strings.Split(tags, ",")
+//	for i, _ := range list {
+//		list[i] = strings.TrimSpace(list[i])
+//	}
+//	fmt.Println(list)
+//}
